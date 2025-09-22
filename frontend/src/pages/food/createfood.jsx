@@ -9,6 +9,21 @@ const CreateFood = () => {
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const MAX_SIZE_MB = 20; 
+    const handleVideoUpload = (event) => {
+            const file = event.target.files[0];
+
+            if (!file) return;
+        const fileSizeMb = file.size / (1024 * 1024);
+            if (fileSizeMb > MAX_SIZE_MB) {
+                alert(`⚠️ File size exceeds ${MAX_SIZE_MB}MB.`);
+                setVideo(null); // reset
+                event.target.value = null;  // reset file input
+                return;
+            }
+            setVideo(file);
+        }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!name || !video) {
@@ -22,11 +37,12 @@ const CreateFood = () => {
         formData.append('description', description);
 
         try {
+
             const response = await axios.post('http://localhost:3000/api/food', formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
             console.log(response.data);
             alert("Food created successfully");
@@ -45,14 +61,12 @@ const CreateFood = () => {
         <div className="min-h-screen flex lg:items-center justify-center bg-gray-50 dark:bg-gray-900">
             <form
                 onSubmit={handleSubmit}
-                className={`w-full max-w-lg p-8 ${
-                    isDarkMode ? 'bg-gray-800' : 'bg-white'
-                } lg:rounded-2xl  shadow-2xl space-y-6`}
+                className={`w-full max-w-lg p-8 ${isDarkMode ? 'bg-gray-800' : 'bg-white'
+                    } lg:rounded-2xl  shadow-2xl space-y-6`}
             >
                 <h2
-                    className={`text-3xl font-bold text-center ${
-                        isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className={`text-3xl font-bold text-center ${isDarkMode ? 'text-white' : 'text-gray-900'
+                        }`}
                 >
                     Create Food
                 </h2>
@@ -80,9 +94,8 @@ const CreateFood = () => {
                 <div className="space-y-2">
                     <label
                         htmlFor="food-video"
-                        className={`block text-sm font-medium ${
-                            isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                        }`}
+                        className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                            }`}
                     >
                         Upload Video
                     </label>
@@ -91,12 +104,11 @@ const CreateFood = () => {
                         name="video"
                         type="file"
                         accept="video/*"
-                        onChange={(e) => setVideo(e.target.files?.[0] || null)}
-                        className={`w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold ${
-                            isDarkMode
-                                ? 'file:bg-gray-700 file:text-white text-gray-300'
-                                : 'file:bg-blue-50 file:text-blue-700 text-gray-700'
-                        }`}
+                        onChange={handleVideoUpload}
+                        className={`w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold ${isDarkMode
+                            ? 'file:bg-gray-700 file:text-white text-gray-300'
+                            : 'file:bg-blue-50 file:text-blue-700 text-gray-700'
+                            }`}
                         required
                     />
                     {video && (

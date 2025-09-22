@@ -20,7 +20,12 @@ const FoodPartnerLogin = () => {
     })
     .then((response)=>{
       console.log(response.data);
-      navigate('/createfood');  
+      const sid = response?.data?.foodPartner?.id;
+      if (sid) {
+        navigate(`/store/${sid}`);
+      } else {
+        console.error('Login succeeded but no storeId returned in response');
+      }
     })
     .catch((error) => {
       console.error(error); 

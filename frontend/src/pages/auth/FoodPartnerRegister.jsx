@@ -30,7 +30,10 @@ const FoodPartnerRegister = () => {
     .then((response) => {
       console.log(response.data);
       alert('Registration successful!');
-      navigate('/createfood');
+      const sid = response?.data?.foodPartner?.id;
+      if (sid) {
+        navigate(`/store/${sid}`);
+      }
     })
     .catch((error) => {
       console.error(error);
