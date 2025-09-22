@@ -34,10 +34,32 @@ async function createFood(req,res){
 
 async function getFoodItems(req,res)
 {
-    const foodItems = await foodModel.find({})
+    const { storeId } = req.query;
+    const query = {};
+    if (storeId) {
+        query.foodPartner = storeId;
+    }
+
+    const foodItems = await foodModel
+        .find(query)
+        .populate({ path: 'foodPartner', select: 'businessName address' })
+        .sort({ createdAt: -1 });
+
+    // Normalize for frontend
+    const result = foodItems.map(item => ({
+        id: item._id,
+        name: item.name,
+        description: item.description || '',
+        video: item.video,
+        businessName: item.foodPartner?.businessName || '',
+        address: item.foodPartner?.address || '',
+        storeId: item.foodPartner?._id || '',
+        createdAt: item.createdAt,
+    }));
+
     res.status(200).json({
         message:"food items fetched successfully",
-        foodItems
+        foodItems: result
     })
 }
 module.exports = {
