@@ -27,7 +27,7 @@ useEffect(() => {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('https://foodiehubproject.vercel.app/api/food', {
+        const res = await fetch('https://backend-food-x7ic.onrender.com/api/food', {
           method: 'GET',
           credentials: 'include',
         });
