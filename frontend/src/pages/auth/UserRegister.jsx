@@ -19,16 +19,16 @@ const UserRegister = () => {
         password
       }, { 
         withCredentials: true 
-      })
-      .then((response) => {
-      
-      console.log(response.data);
+      });
+      try{
+        console.log(response.data);
       alert('Registration successful!');
       navigate('/');
-    }).catch((error) => {
+      } 
+      catch (error) {
       console.error(error);
       alert('Registration failed. Please try again.');
-    });
+    }
   };
 
   return (

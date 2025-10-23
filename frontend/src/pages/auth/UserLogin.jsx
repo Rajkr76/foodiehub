@@ -14,17 +14,16 @@ const UserLogin = () => {
     const response =  await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login",{
       email,
       password
-    }, { withCredentials:true })
-    .then((response) => {
+    }, { withCredentials:true
+});
+  try{
       console.log(response.data);
       alert('Login successful!');
       navigate('/');
-    })
-    .catch((error) => {
+  } catch (error) {
       console.error(error);
       alert('Login failed. Please try again.');
-    });
-  }
+  }}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 font-sans">
