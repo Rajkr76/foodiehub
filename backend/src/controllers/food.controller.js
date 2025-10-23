@@ -1,4 +1,5 @@
 const foodModel = require('../models/food.model');
+const foodPartnerModel = require('../models/foodpartner.model');
 const storage = require('../services/storage.service');
 const {v4:uuid} = require('uuid');
 
@@ -50,6 +51,12 @@ async function getFoodItems(req,res)
             .populate({ path: 'foodPartner', select: 'businessName address' })
             .sort({ createdAt: -1 });
 
+        // If no food items found but we have a valid storeId, get the food partner info
+        let businessInfo = null;
+        if (storeId && foodItems.length === 0) {
+            businessInfo = await foodPartnerModel.findById(storeId).select('businessName address');
+        }
+
         // Normalize for frontend
         const result = foodItems.map(item => ({
             id: item._id,
@@ -64,7 +71,8 @@ async function getFoodItems(req,res)
 
         res.status(200).json({
             message:"food items fetched successfully",
-            foodItems: result
+            foodItems: result,
+            businessInfo: businessInfo // Include business info even if no food items
         })
     } catch (err) {
         console.error('getFoodItems error:', err);

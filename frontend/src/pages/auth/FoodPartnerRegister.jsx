@@ -17,28 +17,34 @@ const FoodPartnerRegister = () => {
     const address = e.target.address.value;
     const password = e.target.password.value;
 
-   const response = await axios.post('http://localhost:3000/api/auth/food-partner/register', {
-      businessName,
-      contactName,
-      email,
-      phone,
-      address,
-      password
-
-    }, {
-       withCredentials:true } )
-    .then((response) => {
-      console.log(response.data);
+    try {
+      const response = await axios.post('http://localhost:3000/api/auth/food-partner/register', {
+        businessName,
+        contactName,
+        email,
+        phone,
+        address,
+        password
+      }, {
+        withCredentials: true 
+      });
+      
+      console.log('Registration successful:', response.data);
       alert('Registration successful!');
       const sid = response?.data?.foodPartner?.id;
       if (sid) {
-        navigate(`/store/${sid}`);
+        navigate(`/profile/${sid}`);
+      } else {
+        console.error('Registration succeeded but no partner ID returned');
       }
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('Registration failed. Please try again.(check your form details)');
-    });
+    } catch (error) {
+      console.error('Registration error:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      
+      const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+      alert(errorMessage);
+    }
   }
 
   return (

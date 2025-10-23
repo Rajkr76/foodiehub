@@ -1,28 +1,34 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-
+import { ArrowLeftFromLine } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 const CreateFood = () => {
     const isDarkMode = true;
+    const navigate = useNavigate();
+
+    const backtoprofile = ()=>{
+        navigate(-1);
+    }
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const MAX_SIZE_MB = 20; 
+    const MAX_SIZE_MB = 20;
     const handleVideoUpload = (event) => {
-            const file = event.target.files[0];
+        const file = event.target.files[0];
 
-            if (!file) return;
+        if (!file) return;
         const fileSizeMb = file.size / (1024 * 1024);
-            if (fileSizeMb > MAX_SIZE_MB) {
-                alert(`⚠️ File size exceeds ${MAX_SIZE_MB}MB.`);
-                setVideo(null); // reset
-                event.target.value = null;  // reset file input
-                return;
-            }
-            setVideo(file);
+        if (fileSizeMb > MAX_SIZE_MB) {
+            alert(`⚠️ File size exceeds ${MAX_SIZE_MB}MB.`);
+            setVideo(null); // reset
+            event.target.value = null;  // reset file input
+            return;
         }
+        setVideo(file);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,6 +65,8 @@ const CreateFood = () => {
 
     return (
         <div className="min-h-screen flex lg:items-center justify-center bg-gray-50 dark:bg-gray-900">
+
+            <ArrowLeftFromLine size={25} color="#ffffff" strokeWidth={1.5} className="absolute top-3 left-4 cursor-pointer" onClick={backtoprofile} />
             <form
                 onSubmit={handleSubmit}
                 className={`w-full max-w-lg p-8 ${isDarkMode ? 'bg-gray-800' : 'bg-white'

@@ -94,79 +94,119 @@ function logoutUser(req,res){
 }
 
 async function registerFoodPartner(req,res){
-    const{businessName,email,password, phone , contactName,address}= req.body;
+    try {
+        console.log('Food partner registration attempt:', req.body);
+        const{businessName,email,password, phone , contactName,address}= req.body;
 
-    const isfoodPartnerAlreadyExists = await foodPartnerModel.findOne({email});
-
-    if(isfoodPartnerAlreadyExists){
-        return res.status(400).json({
-            message:"food partner already exists"
-        })
-    }
-
-    const hashedPassword = await bcrypt.hash(password , 10);
-
-    const foodPartner = await foodPartnerModel.create({
-        businessName,
-        email, 
-        password:hashedPassword,
-        phone,
-        contactName,
-        address
-    })
-    const token = jwt.sign({
-        id:foodPartner._id,
-    },process.env.JWT_SECRET)
-    res.cookie("token", token);
-
-    res.status(201).json({
-        message:"food partner registered successfully",
-        foodPartner:{
-            id:foodPartner._id,
-            email:foodPartner.email,
-            businessName:foodPartner.businessName,
-            phone:foodPartner.phone,
-            contactName:foodPartner.contactName,
-            address:foodPartner.address
+        if (!businessName || !email || !password || !phone || !contactName || !address) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
         }
-    })
 
+        const isfoodPartnerAlreadyExists = await foodPartnerModel.findOne({email});
 
+        if(isfoodPartnerAlreadyExists){
+            return res.status(400).json({
+                message:"food partner already exists"
+            })
+        }
 
+        const hashedPassword = await bcrypt.hash(password , 10);
 
+        const foodPartner = await foodPartnerModel.create({
+            businessName,
+            email, 
+            password:hashedPassword,
+            phone,
+            contactName,
+            address
+        })
+        
+        const token = jwt.sign({
+            id:foodPartner._id,
+        },process.env.JWT_SECRET)
+        
+        res.cookie("token", token, {
+            httpOnly: false, // Allow JavaScript access for development
+            secure: false, // Set to true in production with HTTPS
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
+
+        res.status(201).json({
+            message:"food partner registered successfully",
+            foodPartner:{
+                id:foodPartner._id,
+                email:foodPartner.email,
+                businessName:foodPartner.businessName,
+                phone:foodPartner.phone,
+                contactName:foodPartner.contactName,
+                address:foodPartner.address
+            }
+        })
+    } catch (error) {
+        console.error('Error in registerFoodPartner:', error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
 }
 
 async function loginFoodPartner(req,res){
-    const{email,password} = req.body;
+    try {
+        console.log('Food partner login attempt:', req.body);
+        const{email,password} = req.body;
 
-    const foodPartner = await foodPartnerModel.findOne({email});
-
-    if(!foodPartner){
-        return res.status(400).json({
-            message:"email or password is incorrect"
-        })
-    }
-
-    const isPasswordValid = await  bcrypt.compare(password,foodPartner.password);
-
-    if(!isPasswordValid){
-        return res.status(400).json({
-            message:"email or password is incorrect"
-        })
-    }
-
-    const token = jwt.sign({
-        id:foodPartner._id,
-    },process.env.JWT_SECRET)
-    res.cookie("token", token);
-    res.status(200).json({
-        message:"food partner logged in successfully",
-        foodPartner:{
-            id:foodPartner._id,
-            email:foodPartner.email,
-            fullName:foodPartner.fullName,
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password are required"
+            });
         }
-    })
+
+        const foodPartner = await foodPartnerModel.findOne({email});
+
+        if(!foodPartner){
+            console.log('Food partner not found:', email);
+            return res.status(400).json({
+                message:"email or password is incorrect"
+            })
+        }
+
+        const isPasswordValid = await  bcrypt.compare(password,foodPartner.password);
+
+        if(!isPasswordValid){
+            console.log('Invalid password for food partner:', email);
+            return res.status(400).json({
+                message:"email or password is incorrect"
+            })
+        }
+
+        const token = jwt.sign({
+            id:foodPartner._id,
+        },process.env.JWT_SECRET)
+        
+        res.cookie("token", token, {
+            httpOnly: false, // Allow JavaScript access for development
+            secure: false, // Set to true in production with HTTPS
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
+        
+        res.status(200).json({
+            message:"food partner logged in successfully",
+            foodPartner:{
+                id:foodPartner._id,
+                email:foodPartner.email,
+                businessName:foodPartner.businessName,
+            }
+        })
+    } catch (error) {
+        console.error('Error in loginFoodPartner:', error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
 }
 
 function logoutFoodPartner(req,res){

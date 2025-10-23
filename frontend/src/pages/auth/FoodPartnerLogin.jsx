@@ -22,7 +22,7 @@ const FoodPartnerLogin = () => {
       console.log(response.data);
       const sid = response?.data?.foodPartner?.id;
       if (sid) {
-        navigate(`/store/${sid}`);
+        navigate(`/profile/${sid}`);
       } else {
         console.error('Login succeeded but no storeId returned in response');
       }

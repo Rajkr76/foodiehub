@@ -1,4 +1,4 @@
-import React from 'react'
+import {useEffect,useState,useRef} from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -6,12 +6,12 @@ const Home = () => {
   const navigate = useNavigate();
 
   // Feed state from backend
-  const [videos, setVideos] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState('');
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   // Redirect unauthenticated users
-  React.useEffect(() => {
+useEffect(() => {
     const isSignedIn = document.cookie
       .split(';')
       .some((cookie) => cookie.trim().startsWith('token='));
@@ -21,7 +21,7 @@ const Home = () => {
   }, [navigate]);
 
   // Fetch feed from backend
-  React.useEffect(() => {
+useEffect(() => {
     let isMounted = true;
     async function fetchFeed() {
       try {
@@ -55,12 +55,12 @@ const Home = () => {
   }, []);
 
   // Handle autoplay/pause for visible video
-  const videoRefs = React.useRef([]);
+  const videoRefs = useRef([]);
   const setRef = (el, index) => {
     videoRefs.current[index] = el;
   };
 
-  React.useEffect(() => {
+useEffect(() => {
     const options = {
       root: null,
       threshold: [0.5, 0.75],
@@ -116,12 +116,12 @@ const Home = () => {
   };
 
   // Mobile-only gate: show message on larger screens
-  const [isMobile, setIsMobile] = React.useState(() => {
+  const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === 'undefined') return true;
     return window.matchMedia('(max-width: 767px)').matches; // < md
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window === 'undefined') return;
     const mq = window.matchMedia('(max-width: 767px)');
     const handler = (e) => setIsMobile(e.matches);
@@ -193,11 +193,10 @@ const Home = () => {
             {/* Bottom-left overlay (description + button) */}
             <div className="absolute left-0 right-0 bottom-0 z-10 p-4 sm:p-6">
               {/* Gradient for readability from bottom */}
-              <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-40 bg-gradient-to-t from-black/70 to-transparent" />
-
               <div className="relative max-w-md">
-                <p
-                  className="text-sm sm:text-base font-medium leading-snug text-white/90"
+                <div className="bg-slate-200 rounded-2xl ">
+                  <p
+                  className="text-sm sm:text-base font-medium leading-snug text-black/90 px-3 py-1"
                   style={{
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
@@ -208,10 +207,11 @@ const Home = () => {
                 >
                   {video.description}
                 </p>
-
+                </div>
+                
                 <button
                   onClick={() => handleVisitStore(video.storeId)}
-                  className="mt-3 inline-flex items-center justify-center rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-gray-900 backdrop-blur hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 active:scale-[0.98]"
+                  className="mt-3 inline-flex items-center justify-center rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-gray-900  backdrop-blur hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 active:scale-[0.98]"
                 >
                   Visit Store
                 </button>
