@@ -27,7 +27,7 @@ useEffect(() => {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('http://localhost:3000/api/food', {
+        const res = await fetch('https://foodiehubproject.vercel.app/api/food', {
           method: 'GET',
           credentials: 'include',
         });
