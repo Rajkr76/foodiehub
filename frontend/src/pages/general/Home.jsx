@@ -96,13 +96,13 @@ useEffect(() => {
   const handleLogout = async () => {
     try {
       // Try user logout first
-      const res = await fetch('http://localhost:3000/api/auth/user/logout', {
+      const res = await fetch('https://backend-food-x7ic.onrender.com/api/auth/user/logout', {
         method: 'GET',
         credentials: 'include',
       });
       if (!res.ok) {
         // Fallback to food-partner logout
-        await fetch('http://localhost:3000/api/auth/food-partner/logout', {
+        await fetch('https://backend-food-x7ic.onrender.com/api/auth/food-partner/logout', {
           method: 'GET',
           credentials: 'include',
         });

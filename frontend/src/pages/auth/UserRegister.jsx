@@ -13,7 +13,7 @@ const UserRegister = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-      const response = await axios.post("http://localhost:3000/api/auth/user/register", {
+      const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/register", {
         fullName,
         email,
         password
