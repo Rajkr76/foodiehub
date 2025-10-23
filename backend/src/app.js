@@ -7,9 +7,14 @@ const foodRoutes = require('./routes/food.routes');
 const cors = require('cors');
 
 const app = express();
+
+const FRONTEND_URLS = [
+  process.env.FRONTEND_DEV_URL,  
+  process.env.FRONTEND_PROD_URL 
+];
 app.use(cors({
-    origin:["http://localhost:5173","https://foodiehubproject.vercel.app/"],
-    credentials:true
+    origin: FRONTEND_URLS,
+    credentials: true
 }))
 app.use(express.json());
 app.use(cookieParser());
