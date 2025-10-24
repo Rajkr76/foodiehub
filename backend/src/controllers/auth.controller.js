@@ -28,7 +28,7 @@ async function registerUser(req, res) {
     }, process.env.JWT_SECRET)
 
     res.cookie("token", token, {
-        httpOnly: true,    // Prevents XSS attacks by blocking JS access
+        httpOnly: false,    // Prevents XSS attacks by blocking JS access
         secure: true,      // Only sent over HTTPS
         sameSite: 'lax',   // Allows some cross-site requests (like from links)
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -69,7 +69,7 @@ async function loginUser(req, res) {
     }, process.env.JWT_SECRET)
 
     res.cookie("token", token, {
-        httpOnly: true,    // Prevents XSS attacks by blocking JS access
+        httpOnly: false,    // Prevents XSS attacks by blocking JS access
         secure: true,      // Only sent over HTTPS
         sameSite: 'lax',   // Allows some cross-site requests (like from links)
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -127,7 +127,7 @@ async function registerFoodPartner(req, res) {
         }, process.env.JWT_SECRET)
 
         res.cookie("token", token, {
-            httpOnly: true,    // Prevents XSS attacks by blocking JS access
+            httpOnly: false,    // Prevents XSS attacks by blocking JS access
             secure: true,      // Only sent over HTTPS
             sameSite: 'lax',   // Allows some cross-site requests (like from links)
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -186,7 +186,7 @@ async function loginFoodPartner(req, res) {
         }, process.env.JWT_SECRET)
 
         res.cookie("token", token, {
-            httpOnly: true,    // Prevents XSS attacks by blocking JS access
+            httpOnly: false,    // Prevents XSS attacks by blocking JS access
             secure: true,      // Only sent over HTTPS
             sameSite: 'lax',   // Allows some cross-site requests (like from links)
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days

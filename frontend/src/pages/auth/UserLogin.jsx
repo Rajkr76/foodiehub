@@ -22,10 +22,8 @@ const UserLogin = () => {
       console.log(response.data);
       alert('Login successful!');
       
-      // Add a small delay to ensure cookie is set before navigation
-      setTimeout(() => {
-        navigate('/', { replace: true });
-      }, 100);
+      navigate('/');
+
     } catch (error) {
       console.error(error);
       if (error.response) {
