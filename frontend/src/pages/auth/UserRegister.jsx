@@ -13,6 +13,7 @@ const UserRegister = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
+    try {
       const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/register", {
         fullName,
         email,
@@ -20,14 +21,25 @@ const UserRegister = () => {
       }, { 
         withCredentials: true 
       });
-      try{
-        console.log(response.data);
+      
+      console.log(response.data);
       alert('Registration successful!');
       navigate('/');
-      } 
-      catch (error) {
+    } catch (error) {
       console.error(error);
-      alert('Registration failed. Please try again.');
+      if (error.response) {
+        // Server responded with error status
+        console.error('Error response:', error.response.data);
+        alert(error.response.data.message || 'Registration failed. Please check your information and try again.');
+      } else if (error.request) {
+        // Request was made but no response received
+        console.error('Network error:', error.request);
+        alert('Network error. Please check your connection and try again.');
+      } else {
+        // Something else happened
+        console.error('Error:', error.message);
+        alert('Registration failed. Please try again.');
+      }
     }
   };
 

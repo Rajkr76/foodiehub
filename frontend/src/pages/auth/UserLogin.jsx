@@ -6,24 +6,43 @@ import  { useNavigate } from 'react-router-dom';
 const UserLogin = () => {
   const navigate = useNavigate();
 
-  const handleSubmit =  async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email =  e.target.email.value;
-    const password =  e.target.password.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    const response =  await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login",{
-      email,
-      password
-    }, { withCredentials:true
-});
-  try{
+    try {
+      const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login", {
+        email,
+        password
+      }, { 
+        withCredentials: true
+      });
+      
       console.log(response.data);
       alert('Login successful!');
-      navigate('/');
-  } catch (error) {
+      
+      // Add a small delay to ensure cookie is set before navigation
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 100);
+    } catch (error) {
       console.error(error);
-      alert('Login failed. Please try again.');
-  }}
+      if (error.response) {
+        // Server responded with error status
+        console.error('Error response:', error.response.data);
+        alert(error.response.data.message || 'Login failed. Please check your credentials and try again.');
+      } else if (error.request) {
+        // Request was made but no response received
+        console.error('Network error:', error.request);
+        alert('Network error. Please check your connection and try again.');
+      } else {
+        // Something else happened
+        console.error('Error:', error.message);
+        alert('Login failed. Please try again.');
+      }
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 font-sans">
