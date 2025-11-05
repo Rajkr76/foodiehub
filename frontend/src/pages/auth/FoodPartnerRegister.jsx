@@ -18,7 +18,7 @@ const FoodPartnerRegister = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await axios.post('https://backend-food-x7ic.onrender.com/api/auth/food-partner/register', {
+      const response = await axios.post('http://localhost:3000/api/auth/food-partner/register', {
         businessName,
         contactName,
         email,

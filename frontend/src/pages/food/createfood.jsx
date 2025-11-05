@@ -44,7 +44,7 @@ const CreateFood = () => {
 
         try {
 
-            const response = await axios.post('https://backend-food-x7ic.onrender.com/api/food', formData, {
+            const response = await axios.post('http://localhost:3000/api/food', formData, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',

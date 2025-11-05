@@ -12,7 +12,7 @@ const UserLogin = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login", {
+      const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login",{
         email,
         password
       }, { 

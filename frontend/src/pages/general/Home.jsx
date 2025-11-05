@@ -12,22 +12,11 @@ const Home = () => {
 
   // Redirect unauthenticated users
 useEffect(() => {
-    // Check for authentication cookie with more debugging
-    const cookies = document.cookie;
-    console.log('All cookies:', cookies);
-    
-    const isSignedIn = cookies
-      .split(';')
-      .some((cookie) => {
-        const trimmed = cookie.trim();
-        console.log('Checking cookie:', trimmed);
-        return trimmed.startsWith('token=') || trimmed.startsWith('authToken=') || trimmed.startsWith('jwt=');
-      });
-    
-    console.log('Is signed in:', isSignedIn);
-    
-    if (!isSignedIn) {
-      console.log('No auth cookie found, redirecting to register');
+    const token = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('token='));
+
+    if (!token) {
       navigate('/register');
     }
   }, [navigate]);
