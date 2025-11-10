@@ -28,7 +28,7 @@ useEffect(() => {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('https://backend-food-x7ic.onrender.com/api/food', {
+        const res = await fetch('http://localhost:3000/api/food', {
           method: 'GET',
           credentials: 'include',
         });

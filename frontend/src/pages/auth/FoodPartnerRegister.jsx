@@ -51,9 +51,7 @@ const FoodPartnerRegister = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 font-sans">
       <div className="w-full max-w-md mx-auto">
         <div className="bg-slate-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-orange-500/10 relative overflow-hidden">
-          {/* Top accent bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-red-600"></div>
-
+          
           {/* Back Button */}
           <Link 
             to="/"
@@ -64,9 +62,7 @@ const FoodPartnerRegister = () => {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-              <span className="text-3xl">🍽️</span>
-            </div>
+            
             <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent mb-2">
               Join as Partner
             </h1>

@@ -5,14 +5,40 @@ import  { useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
   const navigate = useNavigate();
+  
 
+  const [forgot , setForgot] = useState(false);
+  const forgot_password = ()=>{
+    if(forgot){
+     setForgot(true);
+    }
+  }
+  {forgot && (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-slate-800 border border-red-500/30 rounded-xl p-6 max-w-sm mx-4 shadow-2xl">
+        <div className="text-center">
+          <div className="text-red-400 text-4xl mb-4">⚠️</div>
+          <h3 className="text-lg font-semibold text-slate-200 mb-2">Feature Not Available</h3>
+          <p className="text-slate-400 text-sm mb-4">
+            Forgot password functionality is currently not supported. Please contact support for assistance.
+          </p>
+          <button
+            onClick={() => setForgot(false)}
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
 
     try {
-      const response = await axios.post("https://backend-food-x7ic.onrender.com/api/auth/user/login",{
+      const response = await axios.post("http://localhost:3000/api/auth/user/login",{
         email,
         password
       }, { 
@@ -46,8 +72,6 @@ const UserLogin = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 font-sans">
       <div className="w-full max-w-md mx-auto">
         <div className="bg-slate-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-blue-500/10 relative overflow-hidden">
-          {/* Top accent bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"></div>
 
           {/* Back Button */}
           <Link 
@@ -59,9 +83,7 @@ const UserLogin = () => {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-              <span className="text-3xl">🛍️</span>
-            </div>
+            
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent mb-2">
               Customer Login
             </h1>
@@ -111,9 +133,9 @@ const UserLogin = () => {
                 </div>
                 Remember me
               </label>
-              <a href="#forgot-password" className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">
+              <h1 className="forgot text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors cursor-pointer">
                 Forgot Password?
-              </a>
+             </h1>
             </div>
 
             <button
@@ -124,26 +146,6 @@ const UserLogin = () => {
               Sign In to Account
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="relative text-center my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
-            </div>
-            <span className="relative bg-slate-800 px-4 text-slate-400 text-sm font-medium">or</span>
-          </div>
-
-          {/* Social Login */}
-          <div className="space-y-3 mb-6">
-            <button className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-slate-900/60 border-2 border-blue-500/20 rounded-xl text-slate-200 text-sm font-medium hover:bg-slate-900/80 hover:border-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
-              <span className="text-lg">🔍</span>
-              Continue with Google
-            </button>
-            <button className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-slate-900/60 border-2 border-blue-500/20 rounded-xl text-slate-200 text-sm font-medium hover:bg-slate-900/80 hover:border-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
-              <span className="text-lg">📘</span>
-              Continue with Facebook
-            </button>
-          </div>
 
           {/* Footer */}
           <div className="text-center pt-6 border-t border-blue-500/10">

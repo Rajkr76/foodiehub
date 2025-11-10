@@ -47,8 +47,6 @@ const UserRegister = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 font-sans">
       <div className="w-full max-w-md mx-auto">
         <div className="bg-slate-800/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-blue-500/10 relative overflow-hidden">
-          {/* Top accent bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"></div>
 
           {/* Back Button */}
           <Link 
@@ -60,9 +58,7 @@ const UserRegister = () => {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-              <span className="text-3xl">🛍️</span>
-            </div>
+            
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent mb-2">
               Create Account
             </h1>
@@ -140,26 +136,6 @@ const UserRegister = () => {
               Create Customer Account
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="relative text-center my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
-            </div>
-            <span className="relative bg-slate-800 px-4 text-slate-400 text-sm font-medium">or</span>
-          </div>
-
-          {/* Social Registration */}
-          <div className="space-y-3 mb-6">
-            <button className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-slate-900/60 border-2 border-blue-500/20 rounded-xl text-slate-200 text-sm font-medium hover:bg-slate-900/80 hover:border-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
-              <span className="text-lg">🔍</span>
-              Sign up with Google
-            </button>
-            <button className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-slate-900/60 border-2 border-blue-500/20 rounded-xl text-slate-200 text-sm font-medium hover:bg-slate-900/80 hover:border-blue-500/40 hover:-translate-y-0.5 transition-all duration-300">
-              <span className="text-lg">📘</span>
-              Sign up with Facebook
-            </button>
-          </div>
 
           {/* Footer */}
           <div className="text-center pt-6 border-t border-blue-500/10">

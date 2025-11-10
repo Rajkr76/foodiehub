@@ -9,6 +9,7 @@ import Home from '../pages/general/Home'
 import Profile from '../components/profile'
 import Createfood from '../pages/food/createfood'
 import UploadProfile from '../components/uploadProfile'
+import FoodHome from '../pages/orderFood/foodHome'
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,9 @@ const AppRoutes = () => {
         <Route path="/createfood" element={<Createfood/>}/>
         <Route path="/store/:storeId" element={<Profile />} />
         <Route path="/profile/:storeId" element={<UploadProfile />} />
+
+        {/* Food order Routes */}
+        <Route path="/foodhome" element={<FoodHome/>} />
         
       </Routes>
     </Router>
