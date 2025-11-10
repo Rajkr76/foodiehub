@@ -10,6 +10,7 @@ import Profile from '../components/profile'
 import Createfood from '../pages/food/createfood'
 import UploadProfile from '../components/uploadProfile'
 import FoodHome from '../pages/orderFood/foodHome'
+import FoodItem from '../pages/orderFood/foodItem'
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
 
         {/* Food order Routes */}
         <Route path="/foodhome" element={<FoodHome/>} />
+        <Route path="/fooditem" element={<FoodItem />} />
         
       </Routes>
     </Router>

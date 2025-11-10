@@ -28,7 +28,7 @@ const Profile = () => {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch(`https://backend-food-x7ic.onrender.com/api/food?storeId=${encodeURIComponent(storeId)}`, {
+        const res = await fetch(`http://localhost:3000/api/food?storeId=${encodeURIComponent(storeId)}`, {
           credentials: 'include',
         });
         if (!res.ok) throw new Error('Failed to load store');
