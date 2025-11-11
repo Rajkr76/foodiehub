@@ -6,13 +6,35 @@ import Footer from "../../components/footer";
 
 const FoodHome = () => {
   const navigate = useNavigate();
-
+  const [loadmore, setLoadMore] = useState(4);
   const backToProfile = () => navigate(-1);
+
+  const loadMore = () => {
+    setLoadMore((prev) => prev + 20);
+  };
 
   const foods = [
     { name: "Burger", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
     { name: "French Fries", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
     { name: "Pizza", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
+    { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
     { name: "Sandwich", image: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&q=80&w=688" },
   ];
 
@@ -39,18 +61,24 @@ const FoodHome = () => {
         </div>
 
         {/* Food Cards */}
-        <div className="flex flex-wrap flex-row gap-2 justify-between p-1 mx-3 h-[60vh] ">
-          {foods.map((item, index) => (
+        <div className="grid grid-cols-2 grid-rows-2 pb-24  gap-5 mx-4 my-4 px-1 gap-y-14 transition-all duration-500 ease-in-out sm:grid-cols-3 md:grid-cols-4">
+          {foods.slice(0, loadmore).map((item, index) => (
             <FoodCard key={index} name={item.name} image={item.image} />
           ))}
         </div>
-      </div>
-      <div className=" flex w-auto rounded-xl justify-center items-center "><h1 className="bg-green-400 rounded-xl w-30 text-center p-2 text-white mb-3">load more</h1>
+
+        {loadmore < foods.length && (
+          <div className=" flex w-auto rounded-xl justify-center items-center h-3"><h1 className="bg-green-400 rounded-xl w-30 text-center p-2 text-white mb-3" onClick={loadMore}>load more</h1>
+          </div>
+        )}
+
+        <div className="fixed bottom-0 left-0 w-full sm:static sm:mt-auto">
+          <Footer />
+        </div>
       </div>
 
-      < Footer />
+
     </>
   );
 };
-
 export default FoodHome;
