@@ -17,7 +17,7 @@ const FoodHome = () => {
   {
     name: "Classic Burger",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800",
-    description: "Juicy beef patty layered with cheese, lettuce, tomato, and house sauce in a toasted bun.",
+    description: "Juicy panner patty layered with cheese, lettuce, tomato, and house sauce in a toasted bun.",
     rating: 4.8
   },
   {
@@ -133,12 +133,14 @@ const FoodHome = () => {
     image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&q=80&w=800",
     description: "Glazed donuts with chocolate and strawberry toppings for a sweet treat.",
     rating: 4.7
+  },
+  {
+    name: "Cupcake",
+    image: "https://images.unsplash.com/photo-1607977011497-dc07f9eae24a?auto=format&fit=crop&q=80&w=800",
+    description: "Soft, moist cupcake topped with creamy frosting and sprinkles.",
+    rating: 4.6
   }
 ];
-
-
-
-
   return (
     <>
       <div>
@@ -152,17 +154,17 @@ const FoodHome = () => {
         <hr className="text-slate-300" />
 
         {/* Search */}
-        <div className="w-auto h-10 mx-4 my-4 rounded flex items-center justify-center bg-slate-300">
+        <div className="w-auto h-10 ml-4 mr-4 my-4 rounded flex items-center justify-center bg-slate-300">
           <input
             type="text"
             className="h-10 w-full px-3 my-4 rounded text-[#000000] font-base"
             placeholder="Search for food"
           />
-          <Search size={24} color="#5e5e5e" className="mr-4" />
+          <Search size={24} color="#5e5e5e" className="mr-4 " />
         </div>
 
         {/* Food Cards */}
-        <div className="grid grid-cols-2 grid-rows-2 pb-24  gap-5 mx-4 my-4 px-1 gap-y-14 transition-all duration-500 ease-in-out sm:grid-cols-3 md:grid-cols-4">
+        <div className="grid grid-cols-2 grid-rows-2 pb-24  w-full my-4 px-4 gap-y-14 gap-x-4 transition-all duration-500 ease-in-out sm:grid-cols-3 md:grid-cols-4">
           {foods.slice(0, loadmore).map((item, index) => (
             <div
               key={index}
@@ -175,7 +177,11 @@ const FoodHome = () => {
         </div>
 
         {loadmore < foods.length && (
-          <div className=" flex w-auto rounded-xl justify-center items-center h-0"><h1 className="bg-green-400 rounded-xl w-30 text-center p-2 text-white mb-3" onClick={loadMore}>load more</h1>
+          <div className=" flex w-auto rounded-xl justify-center items-center h-0 ">
+            
+            <h1 className="bg-green-400 rounded-xl w-30 text-center p-2  text-white mb-15 z-20" onClick={loadMore}>load more
+
+            </h1>
           </div>
         )}
 
