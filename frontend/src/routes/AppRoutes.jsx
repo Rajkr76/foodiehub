@@ -12,7 +12,7 @@ import UploadProfile from '../components/uploadProfile'
 import FoodHome from '../pages/orderFood/foodHome'
 import FoodItem from '../pages/orderFood/foodItem'
 import Cart from '../pages/orderFood/cart'
-
+import Payment from '../pages/orderFood/payment'
 const AppRoutes = () => {
   return (
     <Router>
@@ -37,6 +37,7 @@ const AppRoutes = () => {
         <Route path="/foodhome" element={<FoodHome/>} />
         <Route path="/fooditem" element={<FoodItem />} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/orderFood/payment' element={<Payment/>} />
       </Routes>
     </Router>
   )

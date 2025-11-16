@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {X} from 'lucide-react'
-
+import Footer from '../../components/footer'
+import { Link } from 'react-router-dom';
 const Cart = () => {
 
   const [showpop, setShowpop] = useState(false);
@@ -16,10 +17,10 @@ const Cart = () => {
 
   return (
     <>
-      <div className="h-10 flex items-center text-black pl-3 pt-2">
+      <div className="h-10 flex items-center  text-black pl-3 pt-2">
         <ArrowLeft onClick={backtohome} />
+        <h1 className=" text-red-400 p-2 rounded text-xl font-bold">Items in cart</h1>
       </div>
-
       {isEmpty ? (
         <div className="w-full h-80 mt-20 flex justify-center items-center rounded-lg">
           <div className="bg-green-400 rounded-2xl mx-5 w-full p-2">
@@ -29,8 +30,6 @@ const Cart = () => {
         </div>
       ) : (
         <div className="p-4">
-          <h1 className="text-2xl font-bold">Items in Cart</h1>
-
           <div className="mt-5 bg-gray-100 p-4 rounded-xl">
             <img src={state?.image} className="w-full h-40 object-cover rounded-xl" />
             <h2 className="text-xl font-mono font-bold mt-2">{state?.name}</h2>
@@ -47,6 +46,11 @@ const Cart = () => {
             </button>
 
           </div>
+          <Link to="/orderFood/payment">
+          <div className=" px-10">
+        <button className="w-full bg-green-400 h-12  rounded-xl font-mono font-bold text-lg active:bg-orange-500 transition duration-300 ease-in-out">Proceed to Pay</button>
+      </div>
+      </Link>
         </div>
       )}
 
@@ -107,13 +111,15 @@ const Cart = () => {
           <button>
             <h1 className="w-full bg-green-400 px-10 text-white py-2 rounded-lg font-semibold" >Save Address</h1>
           </button>
-
-            
-
           </div>
         </div>
+        
       )}
-
+      
+      
+      <div className="fixed bottom-0 left-0 w-full sm:static sm:mt-auto">
+        <Footer />
+      </div>
     </>
   );
 };
