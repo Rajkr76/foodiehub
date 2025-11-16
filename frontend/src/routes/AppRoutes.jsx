@@ -35,6 +35,7 @@ const AppRoutes = () => {
 
         {/* Food order Routes */}
         <Route path="/foodhome" element={<FoodHome/>} />
+        <Route path="/foodhome/:storeId" element={<FoodHome/>} />
         <Route path="/fooditem" element={<FoodItem />} />
         <Route path='/cart' element={<Cart/>} />
         <Route path='/orderFood/payment' element={<Payment/>} />

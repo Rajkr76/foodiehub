@@ -37,9 +37,10 @@ useEffect(() => {
         }
         const data = await res.json();
         if (!isMounted) return;
-        const mapped = (data.foodItems || []).map((it) => ({
-          id: it.id,
+        const mapped = (data || []).map((it) => ({
+          id: it.id || it._id,
           src: it.video,
+          name: it.name || '',
           description: it.description || '',
           businessName: it.businessName || '',
           storeId: it.storeId || '',
@@ -97,13 +98,13 @@ useEffect(() => {
   const handleLogout = async () => {
     try {
       // Try user logout first
-      const res = await fetch('https://backend-food-x7ic.onrender.com/api/auth/user/logout', {
+      const res = await fetch('http://localhost:3000/api/auth/user/logout', {
         method: 'GET',
         credentials: 'include',
       });
       if (!res.ok) {
         // Fallback to food-partner logout
-        await fetch('https://backend-food-x7ic.onrender.com/api/auth/food-partner/logout', {
+        await fetch('http://localhost:3000/api/auth/food-partner/logout', {
           method: 'GET',
           credentials: 'include',
         });
@@ -196,6 +197,9 @@ useEffect(() => {
               {/* Gradient for readability from bottom */}
               <div className="relative max-w-md">
                 <div className="bg-slate-200 rounded-2xl ">
+                  <h3 className="text-base sm:text-lg font-bold text-black/90 px-3 pt-2">
+                    {video.name}
+                  </h3>
                   <p
                   className="text-sm sm:text-base font-medium leading-snug text-black/90 px-3 py-1"
                   style={{

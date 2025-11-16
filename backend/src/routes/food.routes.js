@@ -9,11 +9,24 @@ const upload = multer({
 })
 
 // post  /api/food [protected route for food partner]
+router.post('/',authMiddleware.authFoodPartnerMiddleware,upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'video', maxCount: 1 }
+]),foodController.createFood);
 
-router.post('/',authMiddleware.authFoodPartnerMiddleware,upload.single("video"),foodController.createFood);
+// post /api/stores/:storeId/foods [protected route for food partner]
+router.post('/stores/:storeId/foods',authMiddleware.authFoodPartnerMiddleware,upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'video', maxCount: 1 }
+]),foodController.createFood);
 
 // get /api/food [public route to get all food items]
-
 router.get('/',foodController.getFoodItems);
+
+// get /api/stores/:storeId/foods [public route to get food items by store for foodhome - image + name]
+router.get('/stores/:storeId/foods',foodController.getFoodItemsForFoodHome);
+
+// get /api/home/foods [public route to get food items for home page - video + name + description]
+router.get('/home/foods',foodController.getFoodItemsForHome);
 
 module.exports = router;

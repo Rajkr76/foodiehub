@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftFromLine } from 'lucide-react';
 import { X } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 // Mobile-first partner profile
 const Profile = () => {
@@ -28,26 +27,49 @@ const Profile = () => {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch(`http://localhost:3000/api/food?storeId=${encodeURIComponent(storeId)}`, {
-          credentials: 'include',
-        });
-        if (!res.ok) throw new Error('Failed to load store');
-        const data = await res.json();
-        if (!mounted) return;
-        const list = data.foodItems || [];
-        setItems(list);
+        
+        // Fetch food items and partner details separately
+        const [foodRes, partnerRes] = await Promise.all([
+          fetch(`http://localhost:3000/api/food?storeId=${encodeURIComponent(storeId)}`, {
+            credentials: 'include',
+          }),
+          fetch(`http://localhost:3000/api/auth/food-partner/${storeId}`, {
+            credentials: 'include',
+          })
+        ]);
 
-        // Set partner info from food items if available, otherwise from businessInfo
-        if (list.length > 0) {
+        if (!foodRes.ok && !partnerRes.ok) {
+          throw new Error('Failed to load store data');
+        }
+
+        if (!mounted) return;
+
+        // Handle food items
+        if (foodRes.ok) {
+          const foodData = await foodRes.json();
+          const list = Array.isArray(foodData) ? foodData : (foodData.foodItems || []);
+          setItems(list);
+        }
+
+        // Handle partner details
+        if (partnerRes.ok) {
+          const partnerData = await partnerRes.json();
           setPartner({
-            businessName: list[0].businessName || '',
-            address: list[0].address || '',
+            businessName: partnerData.businessName || partnerData.name || '',
+            address: partnerData.address || '',
           });
-        } else if (data.businessInfo) {
-          setPartner({
-            businessName: data.businessInfo.businessName || '',
-            address: data.businessInfo.address || '',
-          });
+        } else {
+          // Fallback: try to get partner info from food items
+          if (foodRes.ok) {
+            const foodData = await foodRes.json();
+            const list = Array.isArray(foodData) ? foodData : (foodData.foodItems || []);
+            if (list.length > 0) {
+              setPartner({
+                businessName: list[0].businessName || '',
+                address: list[0].address || '',
+              });
+            }
+          }
         }
       } catch (e) {
         if (mounted) setError(e.message || 'Something went wrong');
@@ -100,17 +122,19 @@ const Profile = () => {
             <h1 className="text-lg font-semibold">{partner.businessName || 'Store'}</h1>
             <p className="text-sm text-gray-400">{partner.address || 'Address not available'}</p>
           </div>
-          <Link to="/foodhome">
           <div className='w-25 rounded-xl py-0 bg-red-400 flex items-center justify-center '>
-            <button className='bg-green-400 rounded-xl active:bg-red-300 w-25 h-8 text-base font-semibold'> Order food
+            <button 
+              className='bg-green-400 rounded-xl active:bg-red-300 w-25 h-8 text-base font-semibold'
+              onClick={() => navigate(`/foodhome/${storeId}`)}
+            > 
+              Order food
             </button>
-            </div>
-            </Link>
+          </div>
         </div>
         {/* Grid 3 x 2 per sketch (auto-fill) */}
         <div className="mt-4 grid grid-cols-3 gap-2">
           {items.slice(0, 6).map((it) => (
-            <div key={it.id} className="aspect-square overflow-hidden rounded-md bg-gray-800" onClick={() => setSelectedVideo(it.video)}>
+            <div key={it.id} className="aspect-square overflow-hidden rounded-md bg-gray-800 cursor-pointer" onClick={() => setSelectedVideo(it.video)}>
               {/* thumbnail: show video element posterless muted or simple cover */}
               <video
                 src={it.video}

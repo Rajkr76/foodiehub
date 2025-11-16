@@ -16,5 +16,7 @@ router.post('/food-partner/login',authController.loginFoodPartner);
 
 router.get('/food-partner/logout',authController.logoutFoodPartner);
 
+router.get('/food-partner/:storeId',authController.getFoodPartner);
+
 
 module.exports = router;

@@ -214,11 +214,47 @@ function logoutFoodPartner(req, res) {
         message: "food partner logged out successfully"
     })
 }
+
+async function getFoodPartner(req, res) {
+    try {
+        const { storeId } = req.params;
+        
+        if (!storeId) {
+            return res.status(400).json({
+                message: "Store ID is required"
+            });
+        }
+
+        const foodPartner = await foodPartnerModel.findById(storeId).select('-password');
+        
+        if (!foodPartner) {
+            return res.status(404).json({
+                message: "Food partner not found"
+            });
+        }
+
+        res.status(200).json({
+            id: foodPartner._id,
+            businessName: foodPartner.businessName,
+            email: foodPartner.email,
+            phone: foodPartner.phone,
+            contactName: foodPartner.contactName,
+            address: foodPartner.address
+        });
+    } catch (error) {
+        console.error('Error in getFoodPartner:', error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
     logoutUser,
     registerFoodPartner,
     loginFoodPartner,
-    logoutFoodPartner
+    logoutFoodPartner,
+    getFoodPartner
 }
